@@ -9,7 +9,7 @@ using SolastaModApi;
 using SolastaModApi.Extensions;
 
 
-namespace SolastaTacticianFighterSubclass
+namespace SolastaTacticianSubclass
 {
     internal class KnockDownPowerBuilder : BaseDefinitionBuilder<FeatureDefinitionPower>
     {

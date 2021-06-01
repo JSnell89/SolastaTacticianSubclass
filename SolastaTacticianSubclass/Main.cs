@@ -9,7 +9,7 @@ using SolastaModApi;
 using SolastaModApi.Extensions;
 using SolastaTacticianFighterSubclass;
 
-namespace SolastaExtraPowers
+namespace SolastaTacticianSubclass
 {
     public class Main
     {
@@ -21,12 +21,12 @@ namespace SolastaExtraPowers
 
         internal static void LoadTranslations()
         {
-            DirectoryInfo directoryInfo = new DirectoryInfo($@"{UnityModManager.modsPath}/SolastaExtraPowers");
+            DirectoryInfo directoryInfo = new DirectoryInfo($@"{UnityModManager.modsPath}/SolastaTacticianSubclass");
             FileInfo[] files = directoryInfo.GetFiles($"Translations-??.txt");
 
             foreach (var file in files)
             {
-                var filename = $@"{UnityModManager.modsPath}/SolastaExtraPowers/{file.Name}";
+                var filename = $@"{UnityModManager.modsPath}/SolastaTacticianSubclass/{file.Name}";
                 var code = file.Name.Substring(13, 2);
                 var languageSourceData = LocalizationManager.Sources[0];
                 var languageIndex = languageSourceData.GetLanguageIndexFromCode(code);
