@@ -6,8 +6,10 @@ using UnityModManagerNet;
 using HarmonyLib;
 using I2.Loc;
 using SolastaModApi;
+using SolastaModApi.Extensions;
+using SolastaTacticianFighterSubclass;
 
-namespace SolastaTacticianSubclass
+namespace SolastaExtraPowers
 {
     public class Main
     {
@@ -19,12 +21,12 @@ namespace SolastaTacticianSubclass
 
         internal static void LoadTranslations()
         {
-            DirectoryInfo directoryInfo = new DirectoryInfo($@"{UnityModManager.modsPath}/SolastaTacticianSubclass");
+            DirectoryInfo directoryInfo = new DirectoryInfo($@"{UnityModManager.modsPath}/SolastaExtraPowers");
             FileInfo[] files = directoryInfo.GetFiles($"Translations-??.txt");
 
             foreach (var file in files)
             {
-                var filename = $@"{UnityModManager.modsPath}/SolastaTacticianSubclass/{file.Name}";
+                var filename = $@"{UnityModManager.modsPath}/SolastaExtraPowers/{file.Name}";
                 var code = file.Name.Substring(13, 2);
                 var languageSourceData = LocalizationManager.Sources[0];
                 var languageIndex = languageSourceData.GetLanguageIndexFromCode(code);
@@ -68,22 +70,8 @@ namespace SolastaTacticianSubclass
 
         internal static void ModEntryPoint()
         {
-            // example: use the ModApi to get a skeleton blueprint
-            //
-            var skeleton = DatabaseHelper.MonsterDefinitions.Skeleton;
-
-            // example: how to add TEXTS to the game right
-            //
-            // . almost every game blueprint has a GuiPresentation attribute
-            // . GuiPresentation has a Title and a Description
-            // . Create an entry in Translations-en.txt for those (tab separated)
-            // . Refer to those entries when assigning values to these attributes
-            //
-            // . DON'T FORGET TO CLEAN UP THIS EXAMPLE AND Translations-en.txt file
-            // . ugly things will happen if you don't
-            //
-            skeleton.GuiPresentation.Title = "SolastaTacticianSubclass/&FancySkeletonTitle";
-            skeleton.GuiPresentation.Description = "SolastaTacticianSubclass/&FancySkeletonDescription";
+            TacticianFighterSubclassBuilder.BuildAndAddSubclass();
         }
-    }
+    }        
 }
+
