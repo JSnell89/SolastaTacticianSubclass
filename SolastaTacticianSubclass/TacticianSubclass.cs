@@ -45,10 +45,13 @@ namespace SolastaTacticianSubclass
             proneEffect.ConditionForm.Operation = ConditionForm.ConditionOperation.Add;
             proneEffect.ConditionForm.ConditionDefinition = DatabaseHelper.ConditionDefinitions.ConditionProne;
             proneEffect.SavingThrowAffinity = RuleDefinitions.EffectSavingThrowType.Negates;
+
+            EffectForm proneMotionEffect = new EffectForm();
+            proneMotionEffect.FormType = EffectForm.EffectFormType.Motion;
             var proneMotion = new MotionForm();
             proneMotion.SetType(MotionForm.MotionType.FallProne); //Doesn't seem to work?  Tested against a zombie
             proneMotion.SetDistance(1);
-            proneEffect.SetMotionForm(proneMotion);
+            proneMotionEffect.SetMotionForm(proneMotion);
 
             //Add to our new effect
             EffectDescription newEffectDescription = new EffectDescription();
@@ -56,6 +59,7 @@ namespace SolastaTacticianSubclass
             newEffectDescription.EffectForms.Clear();
             newEffectDescription.EffectForms.Add(damageEffect);
             newEffectDescription.EffectForms.Add(proneEffect);
+            newEffectDescription.EffectForms.Add(proneMotionEffect);
             newEffectDescription.SetSavingThrowDifficultyAbility("Strength");
             newEffectDescription.SetDifficultyClassComputation(RuleDefinitions.EffectDifficultyClassComputation.AbilityScoreAndProficiency);
             newEffectDescription.SavingThrowAbility = "Strength";
@@ -254,6 +258,86 @@ namespace SolastaTacticianSubclass
         public static FeatureDefinitionPower InspirePower;
         public static FeatureDefinitionPower CounterStrikePower;
         public static FeatureDefinition GambitResourcePool;
-        public static FeatureDefinition GambitResourcePoolAdd;        
+        public static FeatureDefinition GambitResourcePoolAdd;
+    }
+
+    internal class PowerAttackPowerBuilder : BaseDefinitionBuilder<FeatureDefinitionPower>
+    {
+        const string PowerAttackPowerName = "PowerAttack";
+        const string PowerAttackPowerNameGuid = "4fa7cf53-2908-4ceb-8ae5-b0532e7cf336";
+
+        protected PowerAttackPowerBuilder(string name, string guid) : base(DatabaseHelper.FeatureDefinitionPowers.PowerFighterActionSurge, name, guid)
+        {
+            Definition.GuiPresentation.Title = "Feature/&PowerAttackPowerTitle";
+            Definition.GuiPresentation.Description = "Feature/&PowerAttackPowerDescription";
+            
+            Definition.SetRechargeRate(RuleDefinitions.RechargeRate.AtWill);
+            Definition.SetActivationTime(RuleDefinitions.ActivationTime.NoCost);
+
+            //Add the new power attack condition which adds the attack modifier
+            EffectForm powerAttackEffect = new EffectForm();
+            powerAttackEffect.ConditionForm = new ConditionForm();
+            powerAttackEffect.FormType = EffectForm.EffectFormType.Condition;
+            powerAttackEffect.ConditionForm.Operation = ConditionForm.ConditionOperation.Add;
+            powerAttackEffect.ConditionForm.ConditionDefinition = PowerAttackConditionBuilder.PowerAttackCondition;
+
+            //Add to our new effect
+            EffectDescription newEffectDescription = new EffectDescription();
+            newEffectDescription.Copy(Definition.EffectDescription);
+            newEffectDescription.EffectForms.Clear();
+            newEffectDescription.EffectForms.Add(powerAttackEffect);
+            newEffectDescription.DurationType = RuleDefinitions.DurationType.Turn; //Unfortunately I haven't found a way to make it expire on the next attack so it will be for the full turn.
+        }
+
+        public static FeatureDefinitionPower CreateAndAddToDB(string name, string guid)
+            => new PowerAttackPowerBuilder(name, guid).AddToDB();
+
+        public static FeatureDefinitionPower PowerAttackPower
+            => CreateAndAddToDB(PowerAttackPowerName, PowerAttackPowerNameGuid);
+    }
+
+    internal class PowerAttackAttackModifierBuilder : BaseDefinitionBuilder<FeatureDefinitionAttackModifier>
+    {
+        const string PowerAttackAttackModifierName = "PowerAttackAttackModifier";
+        const string PowerAttackAttackModifierNameGuid = "87286627-3e62-459d-8781-ceac1c3462e6";
+
+        protected PowerAttackAttackModifierBuilder(string name, string guid) : base(DatabaseHelper.FeatureDefinitionAttackModifiers.AttackModifierFightingStyleArchery, name, guid)
+        {
+            Definition.GuiPresentation.Title = "Feature/&PowerAttackAttackModifierTitle";
+            Definition.GuiPresentation.Description = "Feature/&PowerAttackAttackModifierDescription";
+
+            Definition.SetAttackRollModifierMethod(RuleDefinitions.AttackModifierMethod.AddAbilityScoreBonus);
+            Definition.SetDamageRollAbilityScore("Strength");
+            Definition.SetDamageRollModifierMethod(RuleDefinitions.AttackModifierMethod.AddProficiencyBonus);
+        }
+
+        public static FeatureDefinitionAttackModifier CreateAndAddToDB(string name, string guid)
+            => new PowerAttackAttackModifierBuilder(name, guid).AddToDB();
+
+        public static FeatureDefinitionAttackModifier PowerAttackAttackModifier
+            => CreateAndAddToDB(PowerAttackAttackModifierName, PowerAttackAttackModifierNameGuid);
+    }
+
+    internal class PowerAttackConditionBuilder : BaseDefinitionBuilder<ConditionDefinition>
+    {
+        const string PowerAttackConditionName = "PowerAttackCondition";
+        const string PowerAttackConditionNameGuid = "c125b7b9-e668-4c6f-a742-63c065ad2292";
+
+        protected PowerAttackConditionBuilder(string name, string guid) : base(DatabaseHelper.ConditionDefinitions.ConditionHeraldOfBattle, name, guid)
+        {
+            Definition.GuiPresentation.Title = "Feature/&PowerAttackConditionTitle";
+            Definition.GuiPresentation.Description = "Feature/&PowerAttackConditionDescription";
+
+            Definition.SetAllowMultipleInstances(false);
+            Definition.Features.Clear();
+            Definition.Features.Add(PowerAttackAttackModifierBuilder.PowerAttackAttackModifier);
+            Definition.SetDurationType(RuleDefinitions.DurationType.Turn);
+        }
+
+        public static ConditionDefinition CreateAndAddToDB(string name, string guid)
+            => new PowerAttackConditionBuilder(name, guid).AddToDB();
+
+        public static ConditionDefinition PowerAttackCondition
+            => CreateAndAddToDB(PowerAttackConditionName, PowerAttackConditionNameGuid);
     }
 }
