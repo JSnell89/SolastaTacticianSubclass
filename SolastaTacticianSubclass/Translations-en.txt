@@ -1,0 +1,2 @@
+SolastaTacticianSubclass/&FancySkeletonTitle	Fancy Skeleton
+SolastaTacticianSubclass/&FancySkeletonDescription	I'm a fancy skeleton
