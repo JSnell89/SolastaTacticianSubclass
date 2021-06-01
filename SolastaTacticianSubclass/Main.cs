@@ -7,7 +7,7 @@ using HarmonyLib;
 using I2.Loc;
 using SolastaModApi;
 using SolastaModApi.Extensions;
-using SolastaTacticianFighterSubclass;
+using SolastaTacticianSubclass;
 
 namespace SolastaTacticianSubclass
 {
