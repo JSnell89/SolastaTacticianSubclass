@@ -8,6 +8,7 @@ using I2.Loc;
 using SolastaModApi;
 using SolastaModApi.Extensions;
 using SolastaTacticianSubclass;
+using System.Collections.Generic;
 
 namespace SolastaTacticianSubclass
 {
@@ -69,9 +70,23 @@ namespace SolastaTacticianSubclass
         }
 
         internal static void ModEntryPoint()
-        {
+        {   
             TacticianFighterSubclassBuilder.BuildAndAddSubclass();
+            PowerAttackFeatBuilder.AddToFeatList();
         }
-    }        
+
+        //Testing code
+        public static class FighterBuilder
+        {
+            public static void Load()
+            {
+                var features = new List<FeatureUnlockByLevel> {
+                    new FeatureUnlockByLevel(DatabaseHelper.FeatureDefinitionPowers.PowerReckless, 1),
+                };
+
+                DatabaseHelper.CharacterClassDefinitions.Fighter.FeatureUnlocks.AddRange(features);
+            }
+        }
+    }
 }
 
