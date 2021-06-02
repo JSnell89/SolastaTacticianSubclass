@@ -35,18 +35,11 @@ namespace SolastaTacticianSubclass
             damageEffect.DamageForm.DamageType = "DamageBludgeoning";
             damageEffect.SavingThrowAffinity = RuleDefinitions.EffectSavingThrowType.None;
 
-            //Create the prone effect - TODO make the condition affect movement distance?
-            EffectForm proneEffect = new EffectForm();
-            proneEffect.ConditionForm = new ConditionForm();
-            proneEffect.FormType = EffectForm.EffectFormType.Condition;
-            proneEffect.ConditionForm.Operation = ConditionForm.ConditionOperation.Add;
-            proneEffect.ConditionForm.ConditionDefinition = DatabaseHelper.ConditionDefinitions.ConditionProne;
-            proneEffect.SavingThrowAffinity = RuleDefinitions.EffectSavingThrowType.Negates;
-
+            //Create the prone effect - Weirdly enough the motion form seems to also automatically apply the prone condition
             EffectForm proneMotionEffect = new EffectForm();
             proneMotionEffect.FormType = EffectForm.EffectFormType.Motion;
             var proneMotion = new MotionForm();
-            proneMotion.SetType(MotionForm.MotionType.FallProne); //Doesn't seem to work?  Tested against a zombie
+            proneMotion.SetType(MotionForm.MotionType.FallProne);
             proneMotion.SetDistance(1);
             proneMotionEffect.SetMotionForm(proneMotion);
             proneMotionEffect.SavingThrowAffinity = RuleDefinitions.EffectSavingThrowType.Negates;
@@ -56,7 +49,6 @@ namespace SolastaTacticianSubclass
             newEffectDescription.Copy(Definition.EffectDescription);
             newEffectDescription.EffectForms.Clear();
             newEffectDescription.EffectForms.Add(damageEffect);
-            newEffectDescription.EffectForms.Add(proneEffect);
             newEffectDescription.EffectForms.Add(proneMotionEffect);
             newEffectDescription.SetSavingThrowDifficultyAbility("Strength");
             newEffectDescription.SetDifficultyClassComputation(RuleDefinitions.EffectDifficultyClassComputation.AbilityScoreAndProficiency);
