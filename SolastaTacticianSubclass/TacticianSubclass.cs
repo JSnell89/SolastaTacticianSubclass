@@ -212,7 +212,7 @@ namespace SolastaTacticianSubclass
 
     public static class TacticianFighterSubclassBuilder
     {
-        const string TacticianFighterSubclassName = "GambitResourcePool";
+        const string TacticianFighterSubclassName = "TacticianFighterSubclass";
         const string TacticianFighterSubclassNameGuid = "00da2b27-139a-4ca0-a285-aaa70d108bc8";
 
         public static void BuildAndAddSubclass()
@@ -247,8 +247,6 @@ namespace SolastaTacticianSubclass
             CounterStrikePower = CounterStrikePowerBuilder.CounterStrikePower;
             GambitResourcePool = GambitResourcePoolBuilder.GambitResourcePool;
             GambitResourcePoolAdd = GambitResourcePoolAddBuilder.GambitResourcePoolAdd;
-
-
         }
 
         public static FeatureDefinitionPower KnockDownPower;
