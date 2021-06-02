@@ -72,7 +72,6 @@ namespace SolastaTacticianSubclass
         internal static void ModEntryPoint()
         {   
             TacticianFighterSubclassBuilder.BuildAndAddSubclass();
-            PowerAttackFeatBuilder.AddToFeatList();
         }
 
         //Testing code

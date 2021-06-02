@@ -248,7 +248,7 @@ namespace SolastaTacticianSubclass
             GambitResourcePool = GambitResourcePoolBuilder.GambitResourcePool;
             GambitResourcePoolAdd = GambitResourcePoolAddBuilder.GambitResourcePoolAdd;
 
-            
+
         }
 
         public static FeatureDefinitionPower KnockDownPower;
