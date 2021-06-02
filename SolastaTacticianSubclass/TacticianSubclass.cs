@@ -49,6 +49,7 @@ namespace SolastaTacticianSubclass
             proneMotion.SetType(MotionForm.MotionType.FallProne); //Doesn't seem to work?  Tested against a zombie
             proneMotion.SetDistance(1);
             proneMotionEffect.SetMotionForm(proneMotion);
+            proneMotionEffect.SavingThrowAffinity = RuleDefinitions.EffectSavingThrowType.Negates;
 
             //Add to our new effect
             EffectDescription newEffectDescription = new EffectDescription();
@@ -69,8 +70,7 @@ namespace SolastaTacticianSubclass
         public static FeatureDefinitionPower CreateAndAddToDB(string name, string guid)
             => new KnockDownPowerBuilder(name, guid).AddToDB();
 
-        public static FeatureDefinitionPower KnockDownPower
-            => CreateAndAddToDB(KnockDownPowerName, KnockDownPowerNameGuid);
+        public static FeatureDefinitionPower KnockDownPower = CreateAndAddToDB(KnockDownPowerName, KnockDownPowerNameGuid);
     }
 
 
@@ -125,8 +125,7 @@ namespace SolastaTacticianSubclass
         public static FeatureDefinitionPower CreateAndAddToDB(string name, string guid)
             => new InspirePowerBuilder(name, guid).AddToDB();
 
-        public static FeatureDefinitionPower InspirePower
-            => CreateAndAddToDB(InspirePowerName, InspirePowerNameGuid);
+        public static FeatureDefinitionPower InspirePower = CreateAndAddToDB(InspirePowerName, InspirePowerNameGuid);
     }
 
 
@@ -166,8 +165,7 @@ namespace SolastaTacticianSubclass
         public static FeatureDefinitionPower CreateAndAddToDB(string name, string guid)
             => new CounterStrikePowerBuilder(name, guid).AddToDB();
 
-        public static FeatureDefinitionPower CounterStrikePower
-            => CreateAndAddToDB(CounterStrikePowerName, CounterStrikePowerNameGuid);
+        public static FeatureDefinitionPower CounterStrikePower = CreateAndAddToDB(CounterStrikePowerName, CounterStrikePowerNameGuid);
     }
 
 
@@ -187,8 +185,7 @@ namespace SolastaTacticianSubclass
         public static FeatureDefinitionAttributeModifier CreateAndAddToDB(string name, string guid)
             => new GambitResourcePoolBuilder(name, guid).AddToDB();
 
-        public static FeatureDefinitionAttributeModifier GambitResourcePool
-            => CreateAndAddToDB(GambitResourcePoolName, GambitResourcePoolNameGuid);
+        public static FeatureDefinitionAttributeModifier GambitResourcePool = CreateAndAddToDB(GambitResourcePoolName, GambitResourcePoolNameGuid);
     }
 
     internal class GambitResourcePoolAddBuilder : BaseDefinitionBuilder<FeatureDefinitionAttributeModifier>
@@ -205,14 +202,15 @@ namespace SolastaTacticianSubclass
         public static FeatureDefinitionAttributeModifier CreateAndAddToDB(string name, string guid)
             => new GambitResourcePoolAddBuilder(name, guid).AddToDB();
 
-        public static FeatureDefinitionAttributeModifier GambitResourcePoolAdd
-            => CreateAndAddToDB(GambitResourcePoolAddName, GambitResourcePoolAddNameGuid);
+        public static FeatureDefinitionAttributeModifier GambitResourcePoolAdd = CreateAndAddToDB(GambitResourcePoolAddName, GambitResourcePoolAddNameGuid);
     }
 
 
     public static class TacticianFighterSubclassBuilder
     {
-        const string TacticianFighterSubclassName = "TacticianFighterSubclass";
+        //Unfortunate copy paste error.  Going to leave it incorrect here to not give errors for people that already have a previously release.
+        //It doesn't run into issues with the  actual GambitResourcePool since it's in a different DB.
+        const string TacticianFighterSubclassName = "GambitResourcePool";
         const string TacticianFighterSubclassNameGuid = "00da2b27-139a-4ca0-a285-aaa70d108bc8";
 
         public static void BuildAndAddSubclass()
