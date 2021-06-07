@@ -54,7 +54,7 @@ namespace SolastaTacticianSubclass
             newEffectDescription.SetDifficultyClassComputation(RuleDefinitions.EffectDifficultyClassComputation.AbilityScoreAndProficiency);
             newEffectDescription.SavingThrowAbility = "Strength";
             newEffectDescription.HasSavingThrow = true;
-            newEffectDescription.DurationType = RuleDefinitions.DurationType.Turn; //Turn seems to be best so far, though it means that it doesn't affect the creatures movement on it's next turn.  Creatures don't seem to be able to get up if it's set to longer though.
+            newEffectDescription.DurationType = RuleDefinitions.DurationType.Turn;
 
             Definition.SetEffectDescription(newEffectDescription);
         }
