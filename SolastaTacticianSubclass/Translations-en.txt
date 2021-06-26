@@ -18,5 +18,7 @@ Feature/&GambitResourcePoolTitle	Gambit dice pool.
 Feature/&GambitResourcePoolDescription	Pool of gambit dice that can be spent on gambits.  Starts with 4 (mod seems to require to add them individually) they recharge on short rest.
 Feature/&GambitResourcePoolAddTitle	Additional Gambit die.
 Feature/&GambitResourcePoolAddDescription	Adds an additional gambit die.
+Feature/&GambitResourcePoolAdd3Title	3 Additional Gambit die.
+Feature/&GambitResourcePoolAdd3Description	Adds 3 additional gambit die.
 Subclass/&TactitionFighterSubclassTitle The Tactician 
 Subclass/&TactitionFighterSubclassDescription The Tactician uses their knowledge and might on the battlefield to perform different gambits as they are needed.  They can knock down foes, inspire their allies and get in deadly counter-strikes against their foes.  Mod note - This class re-uses channel divinity for these features.

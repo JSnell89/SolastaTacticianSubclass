@@ -189,12 +189,32 @@ namespace SolastaTacticianSubclass
         {
             Definition.GuiPresentation.Title = "Feature/&GambitResourcePoolAddTitle";
             Definition.GuiPresentation.Description = "Feature/&GambitResourcePoolAddDescription";
+            Definition.SetModifierType2(FeatureDefinitionAttributeModifier.AttributeModifierOperation.Additive);
         }
 
         public static FeatureDefinitionAttributeModifier CreateAndAddToDB(string name, string guid)
             => new GambitResourcePoolAddBuilder(name, guid).AddToDB();
 
         public static FeatureDefinitionAttributeModifier GambitResourcePoolAdd = CreateAndAddToDB(GambitResourcePoolAddName, GambitResourcePoolAddNameGuid);
+    }
+
+    internal class GambitResourcePoolAdd3Builder : BaseDefinitionBuilder<FeatureDefinitionAttributeModifier>
+    {
+        const string GambitResourcePoolAddName = "GambitResourcePoolAdd3";
+        const string GambitResourcePoolAddNameGuid = "b56ff27c-cd19-4ccf-a307-9e86a7001930";
+
+        protected GambitResourcePoolAdd3Builder(string name, string guid) : base(DatabaseHelper.FeatureDefinitionAttributeModifiers.AttributeModifierClericChannelDivinityAdd, name, guid)
+        {
+            Definition.GuiPresentation.Title = "Feature/&GambitResourcePoolAdd3Title";
+            Definition.GuiPresentation.Description = "Feature/&GambitResourcePoolAdd3Description";
+            Definition.SetModifierType2(FeatureDefinitionAttributeModifier.AttributeModifierOperation.Additive);
+            Definition.SetModifierValue(3);
+        }
+
+        public static FeatureDefinitionAttributeModifier CreateAndAddToDB(string name, string guid)
+            => new GambitResourcePoolAdd3Builder(name, guid).AddToDB();
+
+        public static FeatureDefinitionAttributeModifier GambitResourcePoolAdd3 = CreateAndAddToDB(GambitResourcePoolAddName, GambitResourcePoolAddNameGuid);
     }
 
 
@@ -217,9 +237,7 @@ namespace SolastaTacticianSubclass
             var definition = new CharacterSubclassDefinitionBuilder(TacticianFighterSubclassName, TacticianFighterSubclassNameGuid)
                     .SetGuiPresentation(subclassGuiPresentation)
                     .AddFeatureAtLevel(GambitResourcePool, 3)
-                    .AddFeatureAtLevel(GambitResourcePoolAdd, 3)
-                    .AddFeatureAtLevel(GambitResourcePoolAdd, 3)
-                    .AddFeatureAtLevel(GambitResourcePoolAdd, 3)
+                    .AddFeatureAtLevel(GambitResourcePoolAdd3, 3)
                     .AddFeatureAtLevel(KnockDownPower, 3)
                     .AddFeatureAtLevel(InspirePower, 3)
                     .AddFeatureAtLevel(CounterStrikePower, 3)
@@ -237,6 +255,7 @@ namespace SolastaTacticianSubclass
             CounterStrikePower = CounterStrikePowerBuilder.CounterStrikePower;
             GambitResourcePool = GambitResourcePoolBuilder.GambitResourcePool;
             GambitResourcePoolAdd = GambitResourcePoolAddBuilder.GambitResourcePoolAdd;
+            GambitResourcePoolAdd3 = GambitResourcePoolAdd3Builder.GambitResourcePoolAdd3;
         }
 
         public static FeatureDefinitionPower KnockDownPower;
@@ -244,5 +263,6 @@ namespace SolastaTacticianSubclass
         public static FeatureDefinitionPower CounterStrikePower;
         public static FeatureDefinition GambitResourcePool;
         public static FeatureDefinition GambitResourcePoolAdd;
+        public static FeatureDefinition GambitResourcePoolAdd3;
     }
 }
